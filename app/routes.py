@@ -30,9 +30,9 @@ def create_certificate():
     """
     data = pack_data(request.args)
     if data == {}:
-        logging.info(f"Invalid arguments. 'name' and 'course' are required, " +
-                     f"'date' and 'expires' should be in a valid YYYY-MM-DD format if present")
-        response = jsonify(msg='Invalid arguments')
+        logging.info(f"Invalid arguments {request.args}")
+        response = jsonify(msg="Invalid arguments. 'name' and 'course' are required, " +
+                               "'date' and 'expires' should be in a valid YYYY-MM-DD format if present")
         response.status_code = 400
         return response
 
@@ -77,7 +77,7 @@ def get_certificate(certificate_id):
         else:
             # Response depends on what needs to be done when certificate is expired
             # Now I'm assuming that we need to delete it.
-            # Alternatively, the certificate could be marked with an "invalid" flag
+            # Alternatively, the certificate could be marked with an "invalid" flag and shown as usual
 
             logging.info(f'Certificate expired for id {certificate_id}')
             database.delete(certificate_id)
